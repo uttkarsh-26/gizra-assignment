@@ -1,0 +1,20 @@
+includes:
+	- vendor/mglaman/phpstan-drupal/extension.neon
+parameters:
+  level: 6
+  checkMissingIterableValueType: false
+  reportUnmatchedIgnoredErrors: false
+  ignoreErrors:
+    - '#has no return type specified.#'
+    - '#Access to an undefined property Drupal\\Core\\Field\\FieldItemListInterface::\$value.#'
+    - '#Access to an undefined property Drupal\\Core\\Field\\FieldItemInterface::\$value.#'
+  paths:
+    - web
+  excludePaths:
+    - '*.api.php'
+    - '*/tests/fixtures/*.php'
+    - 'web/core/*'
+    - 'web/modules/contrib/*'
+    - 'web/libraries/*'
+    - 'web/sites/default/*'
+    - 'web/sites/simpletest/*'
