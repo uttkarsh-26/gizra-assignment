@@ -102,6 +102,9 @@ class StyleGuideController extends ControllerBase {
     $element = $this->getCards();
     $build[] = $this->wrapElementWideContainer($element, 'Cards');
 
+    $element = $this->getPersonCards();
+    $build[] = $this->wrapElementWideContainer($element, 'Person Cards');
+
     $element = $this->getTags();
     $build[] = $this->wrapElementWideContainer($element, 'Tags');
 
@@ -243,6 +246,38 @@ class StyleGuideController extends ControllerBase {
 
     $card = [
       '#theme' => 'server_theme_card',
+      '#image' => $image,
+      '#title' => 'The source has extend, but not everyone fears it.',
+      '#url' => Url::fromRoute('<front>'),
+    ];
+
+    $single_card_long_title = $card;
+    $single_card_long_title['#title'] = 'How Professional Learning Networks Are Helping Educators Get Through Coronavirus, well they need to really learn a lot!';
+
+    $items = [
+      $card,
+      $single_card_long_title,
+      $card,
+      $card,
+    ];
+
+    return [
+      '#theme' => 'server_theme_cards',
+      '#items' => $items,
+    ];
+  }
+
+  /**
+   * Get person cards.
+   *
+   * @return array
+   *   Render array.
+   */
+  protected function getPersonCards(): array {
+    $image = $this->buildImage($this->getPlaceholderImage(128, 128), 'Card image');
+
+    $card = [
+      '#theme' => 'server_theme_person_card',
       '#image' => $image,
       '#title' => 'The source has extend, but not everyone fears it.',
       '#url' => Url::fromRoute('<front>'),

@@ -6,22 +6,15 @@ dependencies:
     - field.field.node.group.body
     - node.type.group
   module:
-    - og
     - user
 id: node.group.default
 targetEntityType: node
 bundle: group
 mode: default
-content:
-  og_group:
-    type: og_group_subscribe
-    label: visually_hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
-    region: content
+content: {  }
 hidden:
   body: true
   langcode: true
   links: true
+  og_group: true
   search_api_excerpt: true

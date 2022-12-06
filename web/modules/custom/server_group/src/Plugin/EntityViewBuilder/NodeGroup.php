@@ -135,6 +135,26 @@ class NodeGroup extends NodeViewBuilderAbstract {
   }
 
   /**
+   * Build the header.
+   *
+   * @param \Drupal\node\NodeInterface $entity
+   *   The entity.
+   *
+   * @return array
+   *   Render array
+   *
+   * @throws \IntlException
+   */
+  protected function buildHeader(NodeInterface $entity): array {
+    $elements = [];
+
+    $elements[] = $this->buildConditionalPageTitle($entity);
+
+    $elements = $this->wrapContainerVerticalSpacing($elements);
+    return $this->wrapContainerNarrow($elements);
+  }
+
+  /**
    * Get main section text.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
@@ -164,14 +184,12 @@ class NodeGroup extends NodeViewBuilderAbstract {
 
       return [
         '#theme' => 'server_theme_prose_text',
-        '#text' => [
-          '#markup' => t('Hi @user_name, @link if you would like to subscribe to this group called @group_name',
+        '#text' => t('Hi @user_name, @link if you would like to subscribe to this group called @group_name',
           [
             '@user_name' => $user_name,
             '@link' => $link,
             '@group_name' => $group_name,
           ]),
-        ],
       ];
     }
     elseif ($user->isAnonymous()) {
@@ -180,9 +198,7 @@ class NodeGroup extends NodeViewBuilderAbstract {
       $link = Link::fromTextAndUrl(t('clicking here'), $url);
       return [
         '#theme' => 'server_theme_prose_text',
-        '#text' => [
-          '#markup' => "Please login to register to this group by " . $link->toString(),
-        ],
+        '#text' => t("Please login to register to this group by @link", ['@link' => $link->toString()]),
       ];
     }
 
@@ -258,26 +274,6 @@ class NodeGroup extends NodeViewBuilderAbstract {
       return TRUE;
     }
     return FALSE;
-  }
-
-  /**
-   * Build the header.
-   *
-   * @param \Drupal\node\NodeInterface $entity
-   *   The entity.
-   *
-   * @return array
-   *   Render array
-   *
-   * @throws \IntlException
-   */
-  protected function buildHeader(NodeInterface $entity): array {
-    $elements = [];
-
-    $elements[] = $this->buildConditionalPageTitle($entity);
-
-    $elements = $this->wrapContainerVerticalSpacing($elements);
-    return $this->wrapContainerNarrow($elements);
   }
 
 }
