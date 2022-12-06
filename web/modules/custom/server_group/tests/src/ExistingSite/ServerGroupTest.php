@@ -42,6 +42,11 @@ class ServerGroupTest extends ExistingSiteBase {
     $this->drupalGet($node->toUrl());
     $this->assertSession()->pageTextContains($assertion_text);
 
+    // We assert as anon user that page does not contain needed text.
+    $this->drupalLogout();
+    $this->drupalGet($node->toUrl());
+    $this->assertSession()->pageTextNotContains($assertion_text);
+
   }
 
 }
