@@ -279,16 +279,22 @@ class StyleGuideController extends ControllerBase {
     $card = [
       '#theme' => 'server_theme_person_card',
       '#image' => $image,
-      '#title' => 'The source has extend, but not everyone fears it.',
-      '#url' => Url::fromRoute('<front>'),
+      '#title' => 'Jane Cooper',
+      '#detail' => 'Paradigm Representative',
+      '#badge' => 'Admin',
+      '#email' => 'email@example.com',
+      '#phone' => '99999999',
     ];
-
-    $single_card_long_title = $card;
-    $single_card_long_title['#title'] = 'How Professional Learning Networks Are Helping Educators Get Through Coronavirus, well they need to really learn a lot!';
 
     $items = [
       $card,
-      $single_card_long_title,
+      $card,
+      $card,
+      $card,
+      $card,
+      $card,
+      $card,
+      $card,
       $card,
       $card,
     ];

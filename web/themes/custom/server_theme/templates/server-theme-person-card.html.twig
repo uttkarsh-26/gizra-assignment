@@ -1,54 +1,53 @@
 <div
-	class="flex flex-col items-start p-0 relative bg-white shadow rounded-lg border-gray-300 w-full h-full relative">
+	class="flex flex-col items-start p-0 relative bg-white shadow rounded-lg border-gray-300 relative">
 	{# Leading content #}
 	<div
-		class="flex flex-col items-center p-8 gap-6 w-full h-4/5 flex-none order-0 self-stretch grow-0">
+		class="flex flex-col items-center p-8 gap-6 w-full flex-none order-0 self-stretch grow-0">
 		{# Avatar #}
 		<figure class="flex-none order-0 grow-0 flex flex-col justify-center items-center p-0 rounded-full overflow-hidden">
 			{{ image }}
 		</figure>
 		{# Text #}
 		<div
-			class="flex-none order-1 grow-0 self-stretch flex flex-col justify-center items-center p-0 g-2 h-20">
+			class="flex-none order-1 grow-0 self-stretch flex flex-col justify-center items-center p-0 g-2">
 			{# Title #}
-			<div class="w-full h-5 not-italic font-medium text-sm leading-5 text-center text-gray-900 flex-none order-0 self-stretch grow-0">
-				{{ 'Name Tiwari' }}
+			<div class="w-full not-italic font-medium text-sm leading-5 text-center text-gray-900 flex-none order-0 self-stretch grow-0">
+				{{ title }}
 			</div>
 			{# Detail and badge #}
 			<div
-				class="flex-none order-1 grow-0 self-stretch flex flex-col items-center p-0 g-2 h-14">
+				class="flex-none order-1 grow-0 self-stretch flex flex-col items-center p-0 gap-y-2">
 				{# Detail #}
-				<div class="flex-none order-0 self-stretch grow-0 h-5 not-italic font-normal text-sm leading-5 text-center text-gray-500">
-					{{ 'Position ofmehere' }}
+				<div class="flex-none order-0 self-stretch grow-0 not-italic font-normal text-sm leading-5 text-center text-gray-500">
+					{{ detail }}
 				</div>
 				{# Badge #}
-				<div class="flex-none order-1 grow-0 flex flex-row justify-center items-center pt-1 pr-2 bg-green-100 h-6 rounded-2xl">
-					<div class="flex-none order-0 grow-0 h-4 not-italic font-medium text-xs leading-4 text-center text-green-800">{{ 'Admin' }}</div>
+				<div class="flex-none order-1 grow-0 flex flex-row justify-center items-center pt-1 pr-2 pb-1 pl-2 bg-green-100 rounded-2xl">
+					<div class="flex-none order-0 grow-0 not-italic font-medium text-xs leading-4 text-center text-green-800">{{ badge }}</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	{# Divider #}
-	<div class="h-0.5 flex-none order-1 grow-0 self-stretch bg-gray-200"></div>
+	<div class="h-px flex-none order-1 grow-0 self-stretch bg-gray-200"></div>
 	{# Actions #}
 	<div
-		class="flex-none order-2 self-stretch grow-0 flex flex-row items-center p-0 h-1/5">
+		class="flex-none order-2 self-stretch grow-0 flex flex-row items-center p-0">
 		{# Email section #}
-		<div class="w-1/2 flex-none order-0 grow-1 flex flex-row justify-center items-center pt-4 pr-0 pl-4 gap-3 rounded-b-lg">
-			<div class="w-4 h-4 flex-none order-0 grow-0 bg-gray-400"></div>
+		<a href={{ 'mailto:' ~ email }} class="w-1/2 flex-none order-0 grow-1 flex flex-row justify-center items-center pt-4 pr-0 pb-4 gap-3 rounded-b-lg">
+			<img class="h-4 w-4 cursor-pointer flex-none order-0 grow-0" src="/{{ directory }}/src/images/email.svg" alt="{{ 'Mail'|t }}">
 			<div class="flex-none order-1 grow-0 font-medium text-sm leading-5 text-gray-700">
 				{{ 'Email' }}
 			</div>
-		</div>
+		</a>
 		{# Divider #}
-		<span class="w-0.5 h-full flex-none order-1 self-stretch grow-0 bg-gray-200"></span>
+		<span class="w-px flex-none order-1 self-stretch grow-0 bg-gray-200"></span>
 		{# Call section #}
-		<div class="w-1/2 flex-none order-2 grow-1 flex flex-row justify-center items-center pt-4 pr-0 pl-4 gap-3 rounded-b-lg">
-			<div class="w-4 h-4 flex-none order-0 grow-0 bg-gray-400"></div>
+		<a href={{ 'tel:' ~ phone }} class="w-1/2 flex-none order-2 grow-1 flex flex-row justify-center items-center pt-4 pr-0 pb-4 gap-3 rounded-b-lg">
+			<img class="h-4 w-4 cursor-pointer flex-none order-0 grow-0" src="/{{ directory }}/src/images/phone.svg" alt="{{ 'Call'|t }}">
 			<div class="flex-none order-1 grow-0 font-normal text-sm leading-5 text-gray-700">
 				{{ 'Call' }}
 			</div>
-		</div>
+		</a>
 	</div>
-
 </div>
