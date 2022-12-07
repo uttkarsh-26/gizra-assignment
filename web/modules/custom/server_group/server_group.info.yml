@@ -1,0 +1,5 @@
+name: "Server Group"
+type: module
+description: "Group functionality."
+core_version_requirement: ^9
+package: "server"
