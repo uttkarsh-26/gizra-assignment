@@ -286,18 +286,7 @@ class StyleGuideController extends ControllerBase {
       '#phone' => '99999999',
     ];
 
-    $items = [
-      $card,
-      $card,
-      $card,
-      $card,
-      $card,
-      $card,
-      $card,
-      $card,
-      $card,
-      $card,
-    ];
+    $items = array_fill(0, 10, $card);
 
     return [
       '#theme' => 'server_theme_cards',
