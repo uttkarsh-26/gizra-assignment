@@ -3,15 +3,11 @@
 namespace Drupal\server_group\Plugin\EntityViewBuilder;
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityRepositoryInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Routing\RedirectDestinationTrait;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\og\Og;
-use Drupal\og\OgAccessInterface;
 use Drupal\og\OgMembershipInterface;
 use Drupal\server_general\EntityViewBuilder\NodeViewBuilderAbstract;
 use Drupal\server_general\LineSeparatorTrait;
@@ -37,42 +33,12 @@ class NodeGroup extends NodeViewBuilderAbstract {
   use TitleAndLabelsTrait;
 
   /**
-   * Constructor for NodeGroup.
-   *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   The current user.
-   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
-   *   The entity repository.
-   * @param \Drupal\og\OgAccessInterface $og_access
-   *   The og access.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, EntityRepositoryInterface $entity_repository, OgAccessInterface $og_access) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $current_user, $entity_repository);
-    $this->ogAccess = $og_access;
-    $this->entityTypeManager = $entity_type_manager;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('current_user'),
-      $container->get('entity.repository'),
-      $container->get('og.access')
-    );
+    $plugin = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $plugin->ogAccess = $container->get('og.access');
+    return $plugin;
   }
 
   /**
@@ -184,7 +150,7 @@ class NodeGroup extends NodeViewBuilderAbstract {
 
       return [
         '#theme' => 'server_theme_prose_text',
-        '#text' => t('Hi @user_name, @link if you would like to subscribe to this group called @group_name',
+        '#text' => $this->t('Hi @user_name, @link if you would like to subscribe to this group called @group_name',
           [
             '@user_name' => $user_name,
             '@link' => $link,
@@ -212,8 +178,11 @@ class NodeGroup extends NodeViewBuilderAbstract {
    *   Group in context.
    * @param \Drupal\user\Entity\User $user
    *   User in context.
+   *
+   * @return bool
+   *   True if subscription is allowed.
    */
-  private function shouldAllowSubscription(EntityInterface $group, User $user) {
+  private function shouldAllowSubscription(EntityInterface $group, User $user): bool {
     $valid_user = $user && $user->isAuthenticated();
     if (!$valid_user) {
       return FALSE;
@@ -231,8 +200,11 @@ class NodeGroup extends NodeViewBuilderAbstract {
    *   Group in context.
    * @param \Drupal\user\Entity\User $user
    *   User in context.
+   *
+   * @return bool
+   *   True if user is group owner.
    */
-  private function isGroupOwner(EntityInterface $group, User $user) {
+  private function isGroupOwner(EntityInterface $group, User $user): bool {
     return $group->getOwnerId() == $user->id();
   }
 
@@ -243,18 +215,12 @@ class NodeGroup extends NodeViewBuilderAbstract {
    *   Group in context.
    * @param \Drupal\user\Entity\User $user
    *   User in context.
+   *
+   * @return bool
+   *   True if user is group member.
    */
-  private function isGroupMember(EntityInterface $group, User $user) {
-    $storage = $this->entityTypeManager->getStorage('og_membership');
-    $props = [
-      'uid' => $user ? $user->id() : 0,
-      'entity_type' => $group->getEntityTypeId(),
-      'entity_bundle' => $group->bundle(),
-      'entity_id' => $group->id(),
-    ];
-    $memberships = $storage->loadByProperties($props);
-    /** @var \Drupal\og\OgMembershipInterface $membership */
-    return reset($memberships);
+  private function isGroupMember(EntityInterface $group, User $user): bool {
+    return Og::isMember($group, $user, OgMembershipInterface::ALL_STATES);
   }
 
   /**
@@ -264,8 +230,11 @@ class NodeGroup extends NodeViewBuilderAbstract {
    *   Group in context.
    * @param \Drupal\user\Entity\User $user
    *   User in context.
+   *
+   * @return bool
+   *   True if user has access to subcription.
    */
-  private function checkUserAccess(EntityInterface $group, User $user) {
+  private function checkUserAccess(EntityInterface $group, User $user): bool {
     /** @var \Drupal\Core\Access\AccessResult $access */
     if (($access = $this->ogAccess->userAccess($group, 'subscribe without approval', $user)) && $access->isAllowed()) {
       return TRUE;
