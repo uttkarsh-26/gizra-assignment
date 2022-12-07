@@ -1,0 +1,28 @@
+uuid: 49439383-b28d-4b57-b5cb-8d4058bcbc99
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.group.body
+    - node.type.group
+  module:
+    - og
+    - user
+id: node.group.full
+targetEntityType: node
+bundle: group
+mode: full
+content:
+  og_group:
+    type: og_group_subscribe
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  body: true
+  langcode: true
+  links: true
+  search_api_excerpt: true
