@@ -18,7 +18,7 @@
           {{ detail }}
         </div>
         {# Badge #}
-        <div class="flex flex-row pt-1 pr-2 pb-1 pl-2 bg-green-100 rounded-2xl">
+        <div class="flex pt-1 pr-2 pb-1 pl-2 bg-green-100 rounded-2xl">
           <div class="font-medium text-xs leading-4 text-green-800">{{ badge }}</div>
         </div>
       </div>
@@ -27,10 +27,10 @@
   {# Divider #}
   <div class="h-px bg-gray-200"></div>
   {# Actions #}
-  <div class="flex flex-row">
+  <div class="flex">
     {# Email section #}
-    <a href={{ 'mailto:' ~ email }} class="w-1/2 grow-1 flex flex-row justify-center items-center pt-4 pb-4 gap-3 rounded-b-lg">
-      <img class="h-4 w-4 cursor-pointer" src="/{{ directory }}/src/images/email.svg" alt="{{ 'Mail'|t }}">
+    <a href={{ 'mailto:' ~ email }} class="w-1/2 grow-1 flex justify-center items-center pt-4 pb-4 gap-3 rounded-b-lg">
+      <img src="/{{ directory }}/src/images/email.svg" alt="{{ 'Mail'|t }}">
       <div class="font-medium text-sm leading-5 text-gray-700">
         {{ 'Email' }}
       </div>
@@ -38,9 +38,9 @@
     {# Divider #}
     <span class="w-px self-stretch bg-gray-200"></span>
     {# Call section #}
-    <a href={{ 'tel:' ~ phone }} class="w-1/2 grow-1 flex flex-row justify-center items-center pt-4 pb-4 gap-3 rounded-b-lg">
-      <img class="h-4 w-4 cursor-pointer" src="/{{ directory }}/src/images/phone.svg" alt="{{ 'Call'|t }}">
-      <div class="font-normal text-sm leading-5 text-gray-700">
+    <a href={{ 'tel:' ~ phone }} class="w-1/2 grow-1 flex justify-center items-center pt-4 pb-4 gap-3 rounded-b-lg">
+      <img src="/{{ directory }}/src/images/phone.svg" alt="{{ 'Call'|t }}">
+      <div class="font-medium text-sm leading-5 text-gray-700">
         {{ 'Call' }}
       </div>
     </a>
